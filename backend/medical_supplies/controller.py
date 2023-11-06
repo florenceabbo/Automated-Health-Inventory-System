@@ -29,7 +29,7 @@ def create_new_medical_supplly():
 
     data = request.get_json()
     name = data['name']
-    price_unit = data['price_unit']
+    unit_price = data['unit_price']
     image = data['image']
     stock = data['stock']
     medical_supply_category_id = data['medical_supply_category_id']
@@ -41,7 +41,7 @@ def create_new_medical_supplly():
         return jsonify({'error':"Medical supply item name is required"})
    
     
-    if not price_unit:
+    if not unit_price:
         return jsonify({'error':"The cost of Medical supply item perunit is required"})
 
     if not image:
@@ -57,7 +57,7 @@ def create_new_medical_supplly():
     if MedicalSupply.query.filter_by(name=name).first() is not None and MedicalSupply.query.filter_by(created_by=created_by).first():
         return jsonify({'error': "This Medical supply item  already exsists"}), 409 
 
-    medical_supply = MedicalSupply(name=name,created_by=created_by,price_unit=price_unit,image=image,stock=stock,medical_supply_category_id=medical_supply_category_id,created_at=datetime.now(),updated_at=datetime.now()) 
+    medical_supply = MedicalSupply(name=name,created_by=created_by,unit_price=unit_price,image=image,stock=stock,medical_supply_category_id=medical_supply_category_id,created_at=datetime.now(),updated_at=datetime.now()) 
     #The datetime.now() function auto generates the current date  
     #inserting values
     db.session.add( medical_supply)
@@ -70,7 +70,7 @@ def get_medicalsupply(id):
     results = {
         "id":medical_supply_id.id,
         "name": medical_supply_id.name,
-        "price_unit":medical_supply_id.price_unit,
+        "unit_price":medical_supply_id.unit_price,
         "image":medical_supply_id.image,
         "stock":medical_supply_id.stock,
         "medical_supply_category_id":medical_supply_id.medical_supply_category_id,
@@ -88,7 +88,7 @@ def update_medicalsupply(id):
     medical_supply = MedicalSupply.query.get_or_404(id)
 
     medical_supply.name =request.json['name']
-    medical_supply.price_unit =request.json['price_unit']
+    medical_supply.unit_price =request.json['unit_price']
     medical_supply.image =request.json['image']
     medical_supply.stock =request.json['stock']
     medical_supply.medical_supply_category_id =request.json['medical_supply_category_id']

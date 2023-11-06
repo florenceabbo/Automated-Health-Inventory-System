@@ -32,7 +32,7 @@ def create_user():
       name = data['name']
       email = data['email']
       contact = data['contact']
-      user_type = 'Customer'
+      user_type = 'Manager'
       password = data['password']
 
 
@@ -64,7 +64,7 @@ def create_user():
        
 
       #creating a hashed password in the database
-      hashed_password = generate_password_hash(password,method="sha256")
+      hashed_password = generate_password_hash(password)
       new_user = User(name=name,email=email,contact=contact,user_type=user_type,password=hashed_password,created_at=datetime.now(),updated_at=datetime.utcnow()) 
       
       #inserting values

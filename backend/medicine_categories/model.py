@@ -12,6 +12,7 @@ class MedicineCategory(db.Model):
   created_by  = db.Column(db.Integer,db.ForeignKey('users.id'))
   created_at = db.Column(db.String(255),nullable=True)
   updated_at = db.Column(db.String(255),nullable=True)
+  medicines= db.relationship("Medicine", backref= "medicine_category")
   
   def __init__(self, name,created_by,created_at,updated_at):
    self.name = name

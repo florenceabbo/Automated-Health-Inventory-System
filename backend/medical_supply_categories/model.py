@@ -15,6 +15,7 @@ class MedicalSupplyCategory(db.Model):
     created_by=db.Column(db.Integer,db.ForeignKey('users.id'))
     created_at=db.Column(db.String(255))
     updated_at=db.Column(db.String(255))
+    medical_supplies= db.relationship("MedicalSupply", backref = "medical_supply_category")
    
     
     
