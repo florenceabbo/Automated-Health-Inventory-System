@@ -34,7 +34,7 @@ def create_new_medicalsupplycategory():
   
     #validations
     if not name:
-         return jsonify({'error':"Sub food category name is required"})
+         return jsonify({'error':"Medical supply category name is required"})
    
     
 
@@ -46,7 +46,7 @@ def create_new_medicalsupplycategory():
     #inserting values
     db.session.add(new_medical_supply_category)
     db.session.commit()
-    return jsonify({'message':'New Sub food category created sucessfully','data': [new_medical_supply_category.id,new_medical_supply_category.name,new_medical_supply_category.created_by,new_medical_supply_category.created_at,new_medical_supply_category.updated_at]}),201
+    return jsonify({'message':'This medical supply category created sucessfully','data': [new_medical_supply_category.id,new_medical_supply_category.name,new_medical_supply_category.created_by,new_medical_supply_category.created_at,new_medical_supply_category.updated_at]}),201
 
 @medical_supply_categories.route('/get/<id>', methods=['GET'])
 def get_medicalsupplycategory(id):

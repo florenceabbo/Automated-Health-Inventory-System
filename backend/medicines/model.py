@@ -13,7 +13,7 @@ class Medicine(db.Model):
 
   id = db.Column(db.Integer, primary_key = True)
   name = db.Column(db.String(100),unique=True)
-  unit_price = db.Column(db.String(10),default='UGX')
+  unit_price = db.Column(db.String(10))
   image = db.Column(db.String(200))
   stock = db.Column(db.Integer)
   created_by  = db.Column(db.Integer,db.ForeignKey('users.id'))

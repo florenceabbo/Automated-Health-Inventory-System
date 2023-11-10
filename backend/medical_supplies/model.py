@@ -13,7 +13,7 @@ class MedicalSupply(db.Model):
 
   id = db.Column(db.Integer, primary_key = True)
   name = db.Column(db.String(100),unique=True)
-  unit_price = db.Column(db.String(10),default='UGX')
+  unit_price = db.Column(db.String(10))
   image = db.Column(db.String(200))
   stock = db.Column(db.Integer)
   medical_supply_category_id = db.Column(db.Integer,db.ForeignKey('medical_supply_categories.id'))

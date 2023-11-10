@@ -6,26 +6,31 @@ class StockOrder(db.Model):
   __tablename__ = 'stock_orders'
   id:int
   status:str
-  quantity:str
   medical_supply_id:int
+  medical_supply_quantity= str
   medicine_id:int
+  medicine_quantity= str
+  
 
   id = db.Column(db.Integer, primary_key = True)
-  status = db.Column(db.String(100),unique=True)
-  quantity = db.Column(db.String(250), unique=True)
+  status = db.Column(db.String(100))
   medical_supply_id = db.Column(db.Integer,db.ForeignKey('medical_supplies.id'))
+  medical_supply_quantity=db.Column(db.String(250))
   medicine_id= db.Column(db.Integer,db.ForeignKey('medicines.id'))
+  medicine_quantity=db.Column(db.String(250))
   created_by  = db.Column(db.Integer,db.ForeignKey('users.id'))
   created_at = db.Column(db.String(255),nullable=True)
   updated_at = db.Column(db.String(255),nullable=True)
   
 
 
-  def __init__(self,status,quantity,medical_supply_id,medicine_id,created_by,created_at,updated_at):
+  def __init__(self,status,medical_supply_id,medical_supply_quantity,medicine_id, medicine_quantity,created_by,created_at,updated_at):
    self.status = status
-   self.quantity = quantity
+  
    self.medicine_id = medicine_id 
+   self. medicine_quantity=  medicine_quantity
    self.medical_supply_id = medical_supply_id
+   self.medical_supply_quantity =medical_supply_quantity
    self.created_by = created_by
    self.created_at = created_at
    self.updated_at =updated_at

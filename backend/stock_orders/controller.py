@@ -29,9 +29,10 @@ def create_new_medicine():
 
     data = request.get_json()
     status = data['status']
-    quantity = data['quantity']
     medical_supply_id = data['medical_supply_id']
-    medicine_id = medicine_id['stock']
+    medical_supply_quantity= data['medical_supply_quantity']
+    medicine_id = data['medicine_id']
+    medicine_quantity= data['medicine_quantity']
     created_by =  get_jwt_identity()
       
   
@@ -39,26 +40,27 @@ def create_new_medicine():
     if not status:
         return jsonify({'error':"Stock order status is required"})
    
-    
-    if not quantity:
-        return jsonify({'error':"The quantity ordered is required"})
 
     if not  medical_supply_id:
         return jsonify({'error':"Medical_supply_id being ordered is required"})
+    if not medical_supply_quantity:
+        return jsonify({'error': "medical_supply_quantity being ordered is required"})
     
     if not medicine_id:
         return jsonify({'error':"The medicine_id being ordered  is required"})
+    if not medicine_quantity:
+        return jsonify({'error': "The medicine_quantity being ordered is required"})
 
 
     if StockOrder.query.filter_by(created_by=created_by).first() is not None and StockOrder.query.filter_by(medical_supply_id=medical_supply_id).first() is not None and StockOrder.query.filter_by(medical_supply_id=medical_supply_id).first():
         return jsonify({'error': "This order has already been made"}), 409 
 
-    new_stock_order = StockOrder(quantity=quantity,created_by=created_by,medical_supply_id=medical_supply_id,medicine_id=medicine_id,status=status,created_at=datetime.now(),updated_at=datetime.now()) 
+    new_stock_order = StockOrder(medical_supply_quantity=medical_supply_quantity,created_by=created_by,medical_supply_id=medical_supply_id,medicine_id=medicine_id,medicine_quantity=medicine_quantity,status=status,created_at=datetime.now(),updated_at=datetime.now()) 
     #The datetime.now() function auto generates the current date  
     #inserting values
     db.session.add(new_stock_order)
     db.session.commit()
-    return jsonify({'message':'New order created sucessfully','data': [new_stock_order.id,new_stock_order.quantity,new_stock_order.status,new_stock_order.created_by,new_stock_order.created_at,new_stock_order.updated_at,new_stock_order.medical_supply_id,new_stock_order.medicine_id]}),201
+    return jsonify({'message':'New order created sucessfully','data': [new_stock_order.id,new_stock_order.medical_supply_quantity, new_stock_order.medicine_quantity,new_stock_order.status,new_stock_order.created_by,new_stock_order.created_at,new_stock_order.updated_at,new_stock_order.medical_supply_id,new_stock_order.medicine_id]}),201
 
 @stock_orders.route('/order/<id>', methods=['GET'])
 def get_stock_orders(id):
@@ -67,7 +69,9 @@ def get_stock_orders(id):
         "quantity": stock_order_id.quantity,
         "status":stock_order_id.status,
         "medical_supply_id":stock_order_id.medical_supply_id,
+        "medicical_supply_quantity": stock_order_id.medical_supply_quantity,
         "medicine_id":stock_order_id.medicine_id,
+        "medicine_quantity": stock_order_id.medicine_quantity,
         "created_by":stock_order_id.created_by,
         "created_at":stock_order_id.created_at
         
@@ -81,10 +85,12 @@ def get_stock_orders(id):
 def update_stock_order(id):
     stock_order = StockOrder.query.get_or_404(id)
 
-    stock_order.quantity =request.json['quantity']
+   
     stock_order.status =request.json['status']
     stock_order.medical_supply_id =request.json['medical_supply_id']
+    stock_order.medical_supply_quantity = request.json['medical_supply_quantity']
     stock_order.medicine_id =request.json['medicine_id']
+    stock_order.medicine_quantity =request.json['medicine_quantity']
     stock_order.updated_at=datetime.utcnow() 
 
     db.session.add(stock_order)

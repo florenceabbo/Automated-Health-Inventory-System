@@ -5,7 +5,7 @@ from flask_jwt_extended import create_access_token
 from backend.db import db
 from datetime import datetime
 from flask_jwt_extended import jwt_required
-from flask_jwt_extended import get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, unset_jwt_cookies
 
 from werkzeug.security import generate_password_hash,check_password_hash
 
@@ -92,7 +92,7 @@ def login():
         password_hash= check_password_hash(user.password,password)
         if password_hash:
             access_token= create_access_token(identity=user.id)
-            return jsonify({"message":"Successfully logged in a user","access_token":access_token,"user":user}),200
+            return jsonify({"message":"User logged in successfully","access_token":access_token,"user":user}),200
         else:
             return jsonify({"message":"Invalid password"}),400
     else:
@@ -143,6 +143,14 @@ def handle_user(user_id):
         db.session.delete(user)
         db.session.commit()
         return {"message": f"User {user.name} successfully deleted."} ,200
+    
+# logging out a user
+# unset_jwt_cookies function which deletes the cookies containing the access token for the user
+@users.route("/logout", methods=["POST"])
+def logout():
+   response = jsonify({"message": "logout successful"})
+   unset_jwt_cookies(response)
+   return response
   
   
 

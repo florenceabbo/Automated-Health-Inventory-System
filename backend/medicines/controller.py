@@ -88,7 +88,7 @@ def update_medicalsupply(id):
     medicine = Medicine.query.get_or_404(id)
 
     medicine.name =request.json['name']
-    medicine.unit_price =request.json['unit price']
+    medicine.unit_price =request.json['unit_price']
     medicine.image =request.json['image']
     medicine.stock =request.json['stock']
     medicine.medicine_category_id =request.json['medicine_category_id']
@@ -102,7 +102,7 @@ def update_medicalsupply(id):
 # delete
 @medicines.route('/delete/<id>', methods=['DELETE'])
 def delete_medicine(id):
-    delete_id = medicines.query.get(id)
+    delete_id = Medicine.query.get(id)
 
     if delete_id is None:
         return{"Message":" This Medicine doesnot exist"}

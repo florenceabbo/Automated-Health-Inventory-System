@@ -29,7 +29,8 @@ def create_new_medicine():
 
     data = request.get_json()
     status = data['status']
-    quantity = data['quantity']
+    medical_supply_quantity = data['medical_supply_quantity']
+    medicine_quantity= data['medicine_quantity']
     stock_order_id = data['stock_order_id']
     created_by =  get_jwt_identity()
       
@@ -39,8 +40,10 @@ def create_new_medicine():
         return jsonify({'error':"Stock purchase status is required"})
    
     
-    if not quantity:
-        return jsonify({'error':"The received stock quantity is required"})
+    if not medical_supply_quantity:
+        return jsonify({'error':"The specofic received stock medical_supply_quantity is required"})
+    if not  medicine_quantity:
+        return jsonify({'error':"The specific received stock medicine is required"})
 
     if not  stock_order_id:
         return jsonify({'error':"The specific order id is required"})
@@ -48,20 +51,21 @@ def create_new_medicine():
 
 
     if ReceivedPurchase.query.filter_by(created_by=created_by).first() is not None and ReceivedPurchase.query.filter_by(stock_order_id=stock_order_id).first():
-        return jsonify({'error': "This order has already been mrecieved"}), 409 
+        return jsonify({'error': "This order has already been recieved"}), 409 
 
-    new_received_purchase = ReceivedPurchase(quantity=quantity,created_by=created_by,stock_order_id=stock_order_id,status=status,created_at=datetime.now(),updated_at=datetime.now()) 
+    new_received_purchase = ReceivedPurchase(medical_supply_quantity= medical_supply_quantity,medicine_quantity=medicine_quantity,created_by=created_by,stock_order_id=stock_order_id,status=status,created_at=datetime.now(),updated_at=datetime.now()) 
     #The datetime.now() function auto generates the current date  
     #inserting values
     db.session.add(new_received_purchase)
     db.session.commit()
-    return jsonify({'message':'New order created sucessfully','data': [new_received_purchase.id,new_received_purchase.quantity,new_received_purchase.status,new_received_purchase.stock_order_id,new_received_purchase.created_by,new_received_purchase.created_at,new_received_purchase.updated_at]}),201
+    return jsonify({'message':'New order created sucessfully','data': [new_received_purchase.id,new_received_purchase.medical_supply_quantity,new_received_purchase.medicine_quantity,new_received_purchase.status,new_received_purchase.stock_order_id,new_received_purchase.created_by,new_received_purchase.created_at,new_received_purchase.updated_at]}),201
 
 @received_purchases.route('/order/<id>', methods=['GET'])
 def get_received_purchase(id):
     received_purchase_id= ReceivedPurchase.query.get(id)
     results = {
-        "quantity": received_purchase_id.quantity,
+        "medical_supply_quantity": received_purchase_id.medical_supply_quantity,
+        "medicine_quantity": received_purchase_id.medicine_quantity,
         "status":received_purchase_id.status,
         "stock_order_id":received_purchase_id.stock_order_id,
         "created_by":received_purchase_id.created_by,
@@ -76,8 +80,8 @@ def get_received_purchase(id):
 @received_purchases.route('/update/<int:id>', methods=['PUT'])
 def update_received_purchase(id):
     received_purchase = ReceivedPurchase.query.get_or_404(id)
-
-    received_purchase.quantity =request.json['quantity']
+    received_purchase.medical_supply_quantity = request.json['medical_supply_quantity']
+    received_purchase.medicine_quantity =request.json['medicine_quantity']
     received_purchase.status =request.json['status']
     received_purchase.stock_order_id =request.json['stock_order_id']
     received_purchase.updated_at=datetime.utcnow() 

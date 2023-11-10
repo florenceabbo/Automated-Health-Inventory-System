@@ -79,7 +79,7 @@ def update_medicine_category(id):
 # delete
 @medicine_categories.route('/delete/<id>', methods=['DELETE'])
 def delete_medicine_category(id):
-    delete_id = medicine_categories.query.get(id)
+    delete_id = MedicineCategory.query.get(id)
 
     if delete_id is None:
         return{"Message":" This Medicine Category doesnot exist"}

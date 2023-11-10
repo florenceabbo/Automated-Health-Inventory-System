@@ -62,7 +62,7 @@ def create_new_medical_supplly():
     #inserting values
     db.session.add( medical_supply)
     db.session.commit()
-    return jsonify({'message':'New Medical supply item created sucessfully','data': [medical_supply.id,medical_supply.name,medical_supply.created_by,medical_supply.price,medical_supply.created_at,medical_supply.updated_at,medical_supply.price_unit,medical_supply.image,medical_supply.stock, medical_supply.medical_supply_category_id]}),201
+    return jsonify({'message':'New Medical supply item created sucessfully','data': [medical_supply.id,medical_supply.name,medical_supply.created_by,medical_supply.unit_price,medical_supply.created_at,medical_supply.updated_at,medical_supply.price_unit,medical_supply.image,medical_supply.stock, medical_supply.medical_supply_category_id]}),201
 
 @medical_supplies.route('/get/<id>', methods=['GET'])
 def get_medicalsupply(id):
