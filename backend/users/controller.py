@@ -5,6 +5,7 @@ from flask_jwt_extended import create_access_token
 from backend.db import db
 from datetime import datetime
 from flask_jwt_extended import jwt_required
+
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, unset_jwt_cookies
 
 from werkzeug.security import generate_password_hash,check_password_hash

@@ -66,7 +66,7 @@ def create_new_medicine():
 def get_stock_orders(id):
     stock_order_id= StockOrder.query.get(id)
     results = {
-        "quantity": stock_order_id.quantity,
+        
         "status":stock_order_id.status,
         "medical_supply_id":stock_order_id.medical_supply_id,
         "medicical_supply_quantity": stock_order_id.medical_supply_quantity,

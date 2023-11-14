@@ -15,7 +15,7 @@ class Medicine(db.Model):
   name = db.Column(db.String(100),unique=True)
   unit_price = db.Column(db.String(10))
   image = db.Column(db.String(200))
-  stock = db.Column(db.Integer)
+  stock = db.Column(db.String(250))
   created_by  = db.Column(db.Integer,db.ForeignKey('users.id'))
   created_at = db.Column(db.String(255),nullable=True)
   updated_at = db.Column(db.String(255),nullable=True)

@@ -34,6 +34,7 @@ def create_app(config_name):
     from backend.stock_orders.controller import stock_orders
     from backend.received_purchases.controller import received_purchases
     from backend.medicine_categories.contoller import medicine_categories
+    from backend.dispensed_stocks.controller import dispensed_stocks
    
    
     
@@ -48,6 +49,7 @@ def create_app(config_name):
     app.register_blueprint(stock_orders) 
     app.register_blueprint(received_purchases)
     app.register_blueprint(medicine_categories)
+    app.register_blueprint(dispensed_stocks)
    
   
 

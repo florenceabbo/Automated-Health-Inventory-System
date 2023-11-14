@@ -9,7 +9,8 @@ from backend.medicines.model import Medicine
 from backend.medicine_categories. model import MedicineCategory
 from backend.stock_orders.model import StockOrder
 from backend.received_purchases.model import ReceivedPurchase
-
+from backend.dispensed_stocks.model import DispensedStock
+ 
 
 
 
@@ -27,4 +28,5 @@ def make_shell_context():
                  User=User,Medicine=Medicine,
                  MedicineCategory= MedicineCategory, 
                  StockOrder=StockOrder, 
-                 ReceivedPurchase=ReceivedPurchase)  
+                 ReceivedPurchase=ReceivedPurchase,
+                 DispensedStock=DispensedStock)  
